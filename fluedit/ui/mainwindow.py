@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './qt/mainwindow.ui'
+# Form implementation generated from reading ui file './ui/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.1
 #
@@ -13,6 +13,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1000, 770)
+        icon = QtGui.QIcon.fromTheme(":/icons/qt-logo.png")
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layout = QtWidgets.QVBoxLayout(self.centralwidget)

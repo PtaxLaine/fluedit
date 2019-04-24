@@ -61,7 +61,7 @@ class Builder:
 
 
 def main():
-    builder = Builder('./qt')
+    builder = Builder('./ui')
     if len(sys.argv) > 1 and sys.argv[1] == '-w':
         builder.watch()
     else:

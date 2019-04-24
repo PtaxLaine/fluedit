@@ -1,10 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt5.QtCore import QSettings
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
+from PyQt5.QtCore import QSettings, qFatal
+from PyQt5.QtGui import QIcon
 from .ui import mainwindow
 from .welcome import Welcome
 from .editor import Editor
-
+import sys
+import traceback
+from . import resource_rc
 
 class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self):
@@ -46,8 +49,17 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
         self.layout.addWidget(self.editor)
 
 
+def except_hook(cls, exception, tb):
+    sys.__excepthook__(cls, exception, traceback)
+    fmt = traceback.format_exception(cls, exception, tb)
+    fmt = "\n".join(fmt)
+    QMessageBox.critical(None, "unexpected exception", fmt)
+    qFatal(fmt)
+
+
 def main():
     app = QApplication(sys.argv)
+    sys.excepthook = except_hook
     app.setOrganizationName("ptaxa.net")
     app.setApplicationName("fluedit")
     window = ExampleApp()

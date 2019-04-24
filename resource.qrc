@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/qt-logo.png</file>
+        <file>icons/list-done.png</file>
+        <file>icons/list-draft.png</file>
+        <file>icons/list-untranslated.png</file>
+    </qresource>
+</RCC>

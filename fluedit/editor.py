@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QInputDialog, QMessageBox, QListWidgetItem
 from PyQt5 import Qt
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt5.QtGui import QColor, QBrush
+from PyQt5.QtGui import QColor, QBrush, QIcon
 from .ui import editor
 from .highlighter import Highlighter
 from .playground import Playground
@@ -24,7 +24,7 @@ class Message:
         self.key = key
         self.message = message
         self.draft = False
-        self.original = None
+        self.original = "Stream status"
 
         if comment:
             self.comment = self.parse_comment(comment)
@@ -65,7 +65,6 @@ class Editor(QWidget, editor.Ui_Editor):
         self.translited_message_edit.textChanged.connect(self.onTextChanged)
 
         self.messages = {}
-        self.current_message = None
 
         self.filename = filename
         if filename:
@@ -74,6 +73,8 @@ class Editor(QWidget, editor.Ui_Editor):
         for x in self.messages.values():
             self.messages_list.addItem(self.create_item(x))
         self.messages_list.setCurrentRow(0)
+        if self.messages:
+            self.current_message = self.messages[self.messages_list.item(0).text()]
 
     def load_file(self, filename):
         messages = {}
@@ -97,12 +98,12 @@ class Editor(QWidget, editor.Ui_Editor):
 
     def on_tab_changed(self, value):
         if value == 1:
-            self.playground.translited_message_edit.setPlainText(self.messages[self.current_message].message)
+            self.playground.translited_message_edit.setPlainText(self.current_message.message)
         else:
             plain = self.playground.translited_message_edit.toPlainText()
-            if plain != self.messages[self.current_message].message:
+            if plain != self.current_message.message:
                 v = QMessageBox.question(self, '', f'translated message was benn changed, apply changes?',
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                 if v == QMessageBox.Yes:
                     self.translited_message_edit.setPlainText(plain)
 
@@ -124,19 +125,18 @@ class Editor(QWidget, editor.Ui_Editor):
             self.save_file(file)
 
     def save_file(self, filename):
-        with open(filename, 'w', encoding='UTF-8') as fs:
-            for key, value in self.messages.items():
-                fs.write(f'{key} = {value}\r\n')
+        raise NotImplementedError()
 
     def on_draft_box_changed(self, value):
-        msg = self.messages[self.current_message]
+        msg = self.current_message
         msg.draft = value == Qt.Qt.Checked
         self.update_list_item(self.messages_list.currentItem(), msg)
 
     def onTextChanged(self):
         if self.current_message:
             plain = self.translited_message_edit.toPlainText()
-            self.messages[self.current_message].message = plain
+            self.current_message.message = plain
+            self.update_list_item(self.messages_list.currentItem(), self.current_message)
 
             syntax = fluent.syntax.FluentParser()
             entries = syntax.parse(build("f", plain))
@@ -150,7 +150,7 @@ class Editor(QWidget, editor.Ui_Editor):
 
     def onCurrentRowChanged(self, row):
         item = self.messages_list.item(row).text()
-        self.current_message = item
+        self.current_message = self.messages[item]
         msg = self.messages[item]
         self.translited_message_edit.setPlainText(msg.message)
         self.comments_edit.setPlainText(msg.comment if msg.comment else "")
@@ -162,10 +162,14 @@ class Editor(QWidget, editor.Ui_Editor):
         return item
 
     def update_list_item(self, item, message):
-        brush = QBrush()
+        icon = QIcon()
         if message.draft:
-            brush = Palette.DRAFT_COLOR
-        item.setBackground(brush)
+            icon = QIcon(':/icons/list-draft.png')
+        elif message.original == message.message:
+            icon = QIcon(':/icons/list-untranslated.png')
+        else:
+            icon = QIcon(':/icons/list-done.png')
+        item.setIcon(icon)
 
     def on_add_item(self):
         text, _ = QInputDialog.getText(self, "item name", "item nnnname")
