@@ -51,6 +51,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionExit"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -73,6 +74,9 @@
      <addaction name="actionReport_issue"/>
      <addaction name="actionGithub"/>
      <addaction name="actionGitlab"/>
+     <addaction name="actionDiscord"/>
+     <addaction name="actionGitter"/>
+     <addaction name="actionBuy_Me_A_Coffee"/>
     </widget>
     <addaction name="menuAbout"/>
     <addaction name="actionLicense"/>
@@ -190,6 +194,26 @@
   <action name="actionWiki">
    <property name="text">
     <string>Wiki</string>
+   </property>
+  </action>
+  <action name="actionDiscord">
+   <property name="text">
+    <string>Discord</string>
+   </property>
+  </action>
+  <action name="actionGitter">
+   <property name="text">
+    <string>Gitter</string>
+   </property>
+  </action>
+  <action name="actionBuy_Me_A_Coffee">
+   <property name="text">
+    <string>Buy Me A Coffee</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>
@@ -355,8 +379,123 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionGitter</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDiscord</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBuy_Me_A_Coffee</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutQt</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_about_qt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_open_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCreate</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_create_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
+  <slot>on_create_file()</slot>
+  <slot>on_open_file()</slot>
+  <slot>on_about_qt()</slot>
   <slot>notimplemented()</slot>
  </slots>
 </ui>

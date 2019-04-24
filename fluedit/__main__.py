@@ -20,9 +20,6 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.welcome.open_file_button.clicked.connect(self.on_open_file)
         self.welcome.create_file_button.clicked.connect(self.on_create_file)
-        self.actionOpen.triggered.connect(self.on_open_file)
-        self.actionCreate.triggered.connect(self.on_create_file)
-        self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
 
         self.open_file("en.ftl")
 
@@ -31,6 +28,9 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
 
     def notimplemented(self):
         raise NotImplementedError()
+
+    def on_about_qt(self):
+        QApplication.instance().aboutQt()
 
     def on_open_file(self):
         options = QFileDialog.Options()
