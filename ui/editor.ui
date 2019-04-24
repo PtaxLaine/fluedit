@@ -281,6 +281,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Configuration</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QVBoxLayout" name="tab_config_layout"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>

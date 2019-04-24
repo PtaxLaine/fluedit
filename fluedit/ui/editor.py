@@ -158,6 +158,14 @@ class Ui_Editor(object):
         self.tab_playground_layout.setObjectName("tab_playground_layout")
         self.verticalLayout_9.addLayout(self.tab_playground_layout)
         self.tabWidget.addTab(self.tab_2, "")
+        self.tab_3 = QtWidgets.QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.tab_3)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.tab_config_layout = QtWidgets.QVBoxLayout()
+        self.tab_config_layout.setObjectName("tab_config_layout")
+        self.verticalLayout_6.addLayout(self.tab_config_layout)
+        self.tabWidget.addTab(self.tab_3, "")
         self.verticalLayout_5.addWidget(self.tabWidget)
 
         self.retranslateUi(Editor)
@@ -189,5 +197,6 @@ class Ui_Editor(object):
         self.comments_edit.setPlaceholderText(_translate("Editor", "tape comment here"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Editor", "Editor"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Editor", "Playground"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Editor", "Configuration"))
 
 

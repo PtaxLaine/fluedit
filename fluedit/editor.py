@@ -6,6 +6,7 @@ from PyQt5.QtGui import QColor, QBrush, QIcon
 from .ui import editor
 from .highlighter import Highlighter
 from .playground import Playground
+from .editor_config import EditorConfig
 import fluent.syntax
 import fluent.syntax.ast
 import re
@@ -59,6 +60,9 @@ class Editor(QWidget, editor.Ui_Editor):
         self.playground = Playground()
         self.tab_playground_layout.addWidget(self.playground)
 
+        self.config_widget = EditorConfig()
+        self.tab_config_layout.addWidget(self.config_widget)
+
         self.tabWidget.currentChanged.connect(self.on_tab_changed)
         self.is_draft_box.stateChanged.connect(self.on_draft_box_changed)
 
@@ -107,15 +111,15 @@ class Editor(QWidget, editor.Ui_Editor):
     def on_tab_changed(self, value):
         if not self.current_message:
             return
-        if value == 1:
-            self.playground.translited_message_edit.setPlainText(self.current_message.message)
-        else:
-            plain = self.playground.translited_message_edit.toPlainText()
-            if plain != self.current_message.message:
-                v = QMessageBox.question(self, '', f'translated message was benn changed, apply changes?',
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-                if v == QMessageBox.Yes:
-                    self.translited_message_edit.setPlainText(plain)
+
+        plain = self.playground.translited_message_edit.toPlainText()
+        if plain != self.current_message.message:
+            v = QMessageBox.question(self, '', f'translated message was benn changed, apply changes?',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if v == QMessageBox.Yes:
+                self.translited_message_edit.setPlainText(plain)
+            else:
+                self.playground.translited_message_edit.setPlainText(self.current_message.message)
 
     def on_fliter_changed(self, text):
         self.messages_list.clear()
@@ -164,6 +168,7 @@ class Editor(QWidget, editor.Ui_Editor):
             plain = self.translited_message_edit.toPlainText()
             self.current_message.message = plain
             self.update_list_item(self.messages_list.currentItem(), self.current_message)
+            self.playground.translited_message_edit.setPlainText(plain)
 
             syntax = fluent.syntax.FluentParser()
             entries = syntax.parse(build("f", plain))
