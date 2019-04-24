@@ -29,7 +29,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="translited_message_edit"/>
+        <widget class="QTextEdit" name="translited_message_edit">
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -52,7 +56,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="language_box">
            <item>
             <property name="text">
              <string>en_US</string>
@@ -78,7 +82,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QComboBox" name="comboBox_2">
+          <widget class="QComboBox" name="text_direction_box">
            <item>
             <property name="text">
              <string>Right-to-left</string>
@@ -101,7 +105,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_4"/>
+        <widget class="QTextEdit" name="variables_edit">
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -119,7 +127,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="textEdit_6">
+         <widget class="QTextEdit" name="output_edit">
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -137,7 +145,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextEdit" name="textEdit_5">
+         <widget class="QTextEdit" name="console_edit">
           <property name="readOnly">
            <bool>true</bool>
           </property>

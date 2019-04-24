@@ -183,7 +183,11 @@
              </layout>
             </item>
             <item>
-             <widget class="QTextEdit" name="translited_message_edit"/>
+             <widget class="QTextEdit" name="translited_message_edit">
+              <property name="acceptRichText">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

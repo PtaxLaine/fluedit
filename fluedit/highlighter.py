@@ -29,7 +29,7 @@ class Highlighter(QSyntaxHighlighter):
         format.setForeground(Qt.Qt.darkBlue)
         self.rules = []
 
-        self.rules.append(HighlightingRule(r'\$[a-zA-Z0-9_-]+',
+        self.rules.append(HighlightingRule(r'\{\s*\$[a-zA-Z0-9_-]+\s*\}',
                                            Format(). \
                                            setForeground(QColor(102, 153, 153)). \
                                            build()))

@@ -104,6 +104,7 @@ class Ui_Editor(object):
         self.horizontalLayout.addWidget(self.is_draft_box)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.translited_message_edit = QtWidgets.QTextEdit(self.layoutWidget2)
+        self.translited_message_edit.setAcceptRichText(False)
         self.translited_message_edit.setObjectName("translited_message_edit")
         self.verticalLayout_4.addWidget(self.translited_message_edit)
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.splitter_2)

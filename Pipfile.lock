@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "439c3e3978ab627c93855cbff7adc17087a29ae74c2c91b6cf5c42891a99aadf"
+            "sha256": "e91e7ff6e9ff9bbac7ba9881d3ceb4a04e305a91ecb1c595f41fadaae7d986d2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,12 +16,38 @@
         ]
     },
     "default": {
-        "fluent": {
+        "attrs": {
             "hashes": [
-                "sha256:b5a270e6e4425cdf140ea10d1a7d9c1af713dd00d61b0412f05cd22e1ff84324"
+                "sha256:69c0dbf2ed392de1cb5ec704444b08a5ef81680a61cb899dc08127123af36a79",
+                "sha256:f0b870f674851ecbfbbbd364d6b5cbdff9dcedbc7f3f5e18a6891057f21fe399"
             ],
-            "index": "pypi",
-            "version": "==0.10.0"
+            "version": "==19.1.0"
+        },
+        "babel": {
+            "hashes": [
+                "sha256:6778d85147d5d85345c14a26aada5e478ab04e39b078b0745ee6870c2b5cf669",
+                "sha256:8cba50f48c529ca3fa18cf81fa9403be176d374ac4d60738b839122dfaaa3d23"
+            ],
+            "version": "==2.6.0"
+        },
+        "fluent-runtime": {
+            "editable": true,
+            "git": "https://github.com/projectfluent/python-fluent",
+            "ref": "d28bc14fa0c8ae336df55018031654e43229a945",
+            "subdirectory": "fluent.runtime"
+        },
+        "fluent-syntax": {
+            "editable": true,
+            "git": "https://github.com/projectfluent/python-fluent",
+            "ref": "d28bc14fa0c8ae336df55018031654e43229a945",
+            "subdirectory": "fluent.syntax"
+        },
+        "fluent.syntax": {
+            "hashes": [
+                "sha256:3c4751f9c2f3dd43f8aefc648ef089d78a294bbee26a1b108b3ea0ad1235d2a8",
+                "sha256:b5544b97d4e74018128a52b9aecd5d1c5c1afcc104671fd54a0a6025c31b82fe"
+            ],
+            "version": "==0.13.0"
         },
         "pyqt5": {
             "hashes": [
@@ -49,6 +75,20 @@
                 "sha256:f24413d34707525a0fe1448b9574089242b9baa7c604ae5714abef9ad1749839"
             ],
             "version": "==4.19.15"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda",
+                "sha256:d747dd3d23d77ef44c6a3526e274af6efeb0a6f1afd5a69ba4d5be4098c8e141"
+            ],
+            "version": "==2019.1"
+        },
+        "six": {
+            "hashes": [
+                "sha256:3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c",
+                "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"
+            ],
+            "version": "==1.12.0"
         }
     },
     "develop": {}

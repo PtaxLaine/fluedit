@@ -155,6 +155,7 @@ class Editor(QWidget, editor.Ui_Editor):
         self.translited_message_edit.setPlainText(msg.message)
         self.comments_edit.setPlainText(msg.comment if msg.comment else "")
         self.is_draft_box.setCheckState(Qt.Qt.Checked if msg.draft else Qt.Qt.Unchecked)
+        self.playground.clean()
 
     def create_item(self, message) -> QListWidgetItem:
         item = QListWidgetItem(message.key)
