@@ -24,7 +24,7 @@ class Message:
         self.key = key
         self.message = message
         self.draft = False
-        self.original = "Stream status"
+        self.original = "Stream status" if message == "Stream status" else None
 
         if comment:
             self.comment = self.parse_comment(comment)
@@ -46,6 +46,10 @@ class Message:
             comment = first + last
         return comment
 
+    @property
+    def is_translated(self):
+        return self.message != self.original and not self.draft
+
 
 class Editor(QWidget, editor.Ui_Editor):
     def __init__(self, filename):
@@ -63,6 +67,8 @@ class Editor(QWidget, editor.Ui_Editor):
 
         self.textHighlighter = Highlighter(self.translited_message_edit)
         self.translited_message_edit.textChanged.connect(self.onTextChanged)
+
+        self.fliter_box.currentTextChanged.connect(self.on_fliter_changed)
 
         self.messages = {}
 
@@ -107,6 +113,23 @@ class Editor(QWidget, editor.Ui_Editor):
                 if v == QMessageBox.Yes:
                     self.translited_message_edit.setPlainText(plain)
 
+    def on_fliter_changed(self, text):
+        self.messages_list.clear()
+        messages = self.messages.values()
+        if text == 'Drafts':
+            messages = filter(lambda x: x.draft, messages)
+        elif text == 'Untranslated':
+            messages = filter(lambda x: not x.is_translated, messages)
+        elif text == 'Translated':
+            messages = filter(lambda x: x.is_translated, messages)
+        elif text == 'With comments':
+            messages = filter(lambda x: x.comment, messages)
+        elif text == 'Without comments':
+            messages = filter(lambda x: not x.comment, messages)
+        for msg in messages:
+            item = self.create_item(msg)
+            self.messages_list.addItem(item)
+
     def on_save(self):
         if self.filename:
             self.save_file(self.filename)
@@ -149,7 +172,10 @@ class Editor(QWidget, editor.Ui_Editor):
                         # self.textHighlighter.set_error((enity.span.start-4, enity.span.end-4), ann.message)
 
     def onCurrentRowChanged(self, row):
-        item = self.messages_list.item(row).text()
+        item = self.messages_list.item(row)
+        if not item:
+            return
+        item = item.text()
         self.current_message = self.messages[item]
         msg = self.messages[item]
         self.translited_message_edit.setPlainText(msg.message)
@@ -166,7 +192,7 @@ class Editor(QWidget, editor.Ui_Editor):
         icon = QIcon()
         if message.draft:
             icon = QIcon(':/icons/list-draft.png')
-        elif message.original == message.message:
+        elif not message.is_translated:
             icon = QIcon(':/icons/list-untranslated.png')
         else:
             icon = QIcon(':/icons/list-done.png')
