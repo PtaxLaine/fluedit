@@ -51,6 +51,8 @@ class Editor(QWidget, editor.Ui_Editor):
     def on_changed(self):
         self.is_modificated = True
         self.changed.emit()
+        if self.current_message:
+            print(self.current_message.to_string())
 
     def load_file(self, filename):
         def offset_to_line(data, offset: int) -> (int, str):
@@ -142,7 +144,11 @@ class Editor(QWidget, editor.Ui_Editor):
                 self.update_list_item(self.messages_list.currentItem(), msg)
 
     def on_comment_changed(self):
-        pass
+        if self.current_message:
+            plain = self.comments_edit.toPlainText()
+            if plain != self.current_message.comment:
+                self.current_message.comment = plain
+                self.on_changed()
 
     def on_message_changed(self):
         if self.current_message:

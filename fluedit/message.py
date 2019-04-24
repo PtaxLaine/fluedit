@@ -1,4 +1,5 @@
 import re
+import base64
 
 
 class Message:
@@ -12,7 +13,7 @@ class Message:
         if comment:
             self.comment = self.parse_comment(comment)
         else:
-            self.comment = comment
+            self.comment = None
 
     def parse_comment(self, comment):
         eraser = []
@@ -32,3 +33,20 @@ class Message:
     @property
     def is_translated(self):
         return self.message != self.original and not self.draft
+
+    def to_string(self):
+        res = ""
+        if self.draft:
+            res += "# fluedit:draft\n"
+        if self.original:
+            res += f"# fluedit:original {base64.b64encode(self.original.encode()).decode()}\n"
+        if self.comment is not None and self.comment.strip():
+            res += "\n".join(map(lambda x: '# ' + x, self.comment.split('\n')))
+            res += "\n"
+
+        res += self.key + ' = '
+        if self.message.startswith(' ') and '\n' in self.message:
+            res += '\n'
+        res += self.message
+
+        return res
