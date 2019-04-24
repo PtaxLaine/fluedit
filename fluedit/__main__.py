@@ -9,6 +9,7 @@ import sys
 import traceback
 from . import resource_rc
 
+
 class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -24,6 +25,12 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
         self.actionAboutQt.triggered.connect(QApplication.instance().aboutQt)
 
         self.open_file("en.ftl")
+
+    def closeEvent(self, *args, **kwargs):
+        pass  # todo: save file dialog
+
+    def notimplemented(self):
+        raise NotImplementedError()
 
     def on_open_file(self):
         options = QFileDialog.Options()

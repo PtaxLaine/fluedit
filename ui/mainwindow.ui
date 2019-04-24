@@ -62,11 +62,23 @@
      </property>
      <addaction name="actionAboutQt"/>
      <addaction name="actionAboutFluEdit"/>
-     <addaction name="actionPython"/>
-     <addaction name="actionFluent"/>
+     <addaction name="actionAboutPython"/>
+     <addaction name="actionAboutFluent"/>
+    </widget>
+    <widget class="QMenu" name="menuOther">
+     <property name="title">
+      <string>Other</string>
+     </property>
+     <addaction name="actionIssues"/>
+     <addaction name="actionReport_issue"/>
+     <addaction name="actionGithub"/>
+     <addaction name="actionGitlab"/>
     </widget>
     <addaction name="menuAbout"/>
     <addaction name="actionLicense"/>
+    <addaction name="separator"/>
+    <addaction name="actionWiki"/>
+    <addaction name="menuOther"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -116,12 +128,12 @@
     <string>License</string>
    </property>
   </action>
-  <action name="actionPython">
+  <action name="actionAboutPython">
    <property name="text">
     <string>Python</string>
    </property>
   </action>
-  <action name="actionFluent">
+  <action name="actionAboutFluent">
    <property name="text">
     <string>Fluent</string>
    </property>
@@ -155,7 +167,196 @@
     <string>Ctrl+Shift+F</string>
    </property>
   </action>
+  <action name="actionIssues">
+   <property name="text">
+    <string>Issues</string>
+   </property>
+  </action>
+  <action name="actionGithub">
+   <property name="text">
+    <string>Github</string>
+   </property>
+  </action>
+  <action name="actionGitlab">
+   <property name="text">
+    <string>Gitlab</string>
+   </property>
+  </action>
+  <action name="actionReport_issue">
+   <property name="text">
+    <string>Report issue</string>
+   </property>
+  </action>
+  <action name="actionWiki">
+   <property name="text">
+    <string>Wiki</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionWiki</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutFluEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutPython</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutFluent</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLicense</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGithub</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionGitlab</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionIssues</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionReport_issue</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>notimplemented()</slot>
+ </slots>
 </ui>
