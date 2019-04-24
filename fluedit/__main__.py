@@ -56,8 +56,11 @@ def except_hook(cls, exception, tb):
     sys.__excepthook__(cls, exception, traceback)
     fmt = traceback.format_exception(cls, exception, tb)
     fmt = "\n".join(fmt)
-    QMessageBox.critical(None, "unexpected exception", fmt)
-    qFatal(fmt)
+    b = QMessageBox.critical(None, "unexpected exception", fmt,
+                             QMessageBox.Abort | QMessageBox.Ignore,
+                             QMessageBox.Abort)
+    if b == QMessageBox.Abort:
+        qFatal(fmt)
 
 
 def main():
