@@ -14,7 +14,8 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset theme=":/icons/qt-logo.png"/>
+   <iconset theme=":/icons/qt-logo.png">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="layout">
@@ -49,6 +50,7 @@
     <addaction name="actionCreate"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -66,7 +68,16 @@
     <addaction name="menuAbout"/>
     <addaction name="actionLicense"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionFind_message_id"/>
+    <addaction name="actionFind_message"/>
+    <addaction name="actionFindNext"/>
+   </widget>
    <addaction name="menuOpen"/>
+   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -113,6 +124,35 @@
   <action name="actionFluent">
    <property name="text">
     <string>Fluent</string>
+   </property>
+  </action>
+  <action name="actionFind_message_id">
+   <property name="text">
+    <string>Find message by id</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionFindNext">
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionFind_message">
+   <property name="text">
+    <string>Find message</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
    </property>
   </action>
  </widget>

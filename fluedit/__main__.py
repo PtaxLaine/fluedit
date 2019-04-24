@@ -47,6 +47,9 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
         self.actionSave.triggered.connect(self.editor.on_save)
         self.actionSave_as.triggered.connect(self.editor.on_save_as)
         self.layout.addWidget(self.editor)
+        self.actionFind_message_id.triggered.connect(self.editor.find_msg_id_dialog)
+        self.actionFind_message.triggered.connect(self.editor.find_msg_dialog)
+        self.actionFindNext.triggered.connect(self.editor.find_next)
 
 
 def except_hook(cls, exception, tb):

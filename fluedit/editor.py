@@ -71,6 +71,8 @@ class Editor(QWidget, editor.Ui_Editor):
         self.fliter_box.currentTextChanged.connect(self.on_fliter_changed)
 
         self.messages = {}
+        self.find_msg_generator = None
+        self.current_message = None
 
         self.filename = filename
         if filename:
@@ -103,6 +105,8 @@ class Editor(QWidget, editor.Ui_Editor):
         return messages
 
     def on_tab_changed(self, value):
+        if not self.current_message:
+            return
         if value == 1:
             self.playground.translited_message_edit.setPlainText(self.current_message.message)
         else:
@@ -215,3 +219,38 @@ class Editor(QWidget, editor.Ui_Editor):
             item = self.create_item(msg)
             self.messages_list.addItem(item)
             self.messages_list.setCurrentItem(item)
+
+    def find_next(self):
+        if self.find_msg_generator:
+            try:
+                next(self.find_msg_generator)
+            except StopIteration:
+                QMessageBox.information(self, '', 'messages list end reached')
+
+    def find_msg_id_dialog(self):
+        self.find_msg_generator = None
+        text, _ = QInputDialog.getText(self, "find message", "find message by id")
+        if text:
+            def gen():
+                for item in self.messages_list.findItems(text, Qt.Qt.MatchContains):
+                    self.messages_list.setCurrentItem(item)
+                    yield True
+
+            self.find_msg_generator = gen()
+            self.find_next()
+
+    def find_msg_dialog(self):
+        self.find_msg_generator = None
+        text, _ = QInputDialog.getText(self, "find message", "find message by translated text")
+        if text:
+            text = text.lower()
+
+            def gen():
+                for message in self.messages.values():
+                    if text in message.message.lower():
+                        for item in self.messages_list.findItems(message.key, Qt.Qt.MatchExactly):
+                            self.messages_list.setCurrentItem(item)
+                            yield True
+
+            self.find_msg_generator = gen()
+            self.find_next()
