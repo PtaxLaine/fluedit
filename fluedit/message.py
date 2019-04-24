@@ -2,10 +2,11 @@ import re
 
 
 class Message:
-    def __init__(self, key, message, comment):
+    def __init__(self, key, message, comment, errors=None):
         self.key = key
         self.message = message
         self.draft = False
+        self.errors = errors if errors else []
         self.original = "Stream status" if message == "Stream status" else None
 
         if comment:

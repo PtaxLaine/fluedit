@@ -53,6 +53,13 @@ class Editor(QWidget, editor.Ui_Editor):
             self.current_message = self.messages[self.messages_list.item(0).text()]
 
     def load_file(self, filename):
+        def offset_to_line(data, offset: int) -> (int, str):
+            line = 1
+            for i in range(offset):
+                if data[i] == '\n':
+                    line += 1
+            return line, data[offset:].split('\n', 1)[0].strip()
+
         messages = {}
         with open(filename, encoding='UTF-8') as fs:
             file_data = fs.read()
@@ -65,7 +72,10 @@ class Editor(QWidget, editor.Ui_Editor):
                     key = entity.id.name
                     messages[key] = Message(key, message, comment)
                 elif isinstance(entity, fluent.syntax.ast.Junk):
-                    QMessageBox.critical(self, '', 'file load error')
+                    pos = offset_to_line(file_data, entity.span.start)
+                    QMessageBox.warning(self, '', 'file load error\n' +
+                                        "\n".join(map(lambda x: f'line: {pos[0]}   {x.code}: {x.message}',
+                                                      entity.annotations)))
                 elif isinstance(entity, fluent.syntax.ast.ResourceComment):
                     pass
                 elif isinstance(entity, fluent.syntax.ast.GroupComment):
@@ -167,6 +177,8 @@ class Editor(QWidget, editor.Ui_Editor):
             icon = QIcon(':/icons/list-draft.png')
         elif not message.is_translated:
             icon = QIcon(':/icons/list-untranslated.png')
+        elif message.errors:
+            icon = QIcon(':/icons/list-error.png')
         else:
             icon = QIcon(':/icons/list-done.png')
         item.setIcon(icon)
