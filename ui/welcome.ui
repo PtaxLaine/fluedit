@@ -62,5 +62,42 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>open_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Welcome</receiver>
+   <slot>on_open_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>create_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Welcome</receiver>
+   <slot>on_create_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_create_file()</slot>
+  <slot>on_open_file()</slot>
+ </slots>
 </ui>

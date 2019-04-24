@@ -20,12 +20,6 @@ class Playground(QWidget, playground.Ui_Playground):
         super().__init__()
         self.setupUi(self)
         self.textHighlighter = Highlighter(self.translited_message_edit)
-        self.translited_message_edit.textChanged.connect(self.update_variables)
-        self.translited_message_edit.textChanged.connect(self.compile)
-        self.variables_edit.textChanged.connect(self.compile)
-        self.variables_edit.textChanged.connect(self.compile)
-        self.language_box.currentTextChanged.connect(self.compile)
-        self.text_direction_box.currentIndexChanged.connect(self.compile)
         self.variables = {}
 
     def clean(self):
@@ -63,11 +57,13 @@ class Playground(QWidget, playground.Ui_Playground):
             self.console_edit.setPlainText(f'{type(ex).__name__}\n{ex}')
 
     def variables_updated(self):
-        self.variables_edit.setPlainText(json.dumps(self.variables, indent=4, ensure_ascii=False))
+        js = json.dumps(self.variables, indent=4, ensure_ascii=False)
+        self.variables_edit.setPlainText(js)
 
     def update_variables(self):
         variables = set()
         msg = self.translited_message_edit.toPlainText()
+        print(msg)
         for var in Playground.VARIABLE_DETECTOR.finditer(msg):
             variables.add(var.group(1))
         update = False

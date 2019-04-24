@@ -82,12 +82,15 @@ class Ui_MainWindow(object):
         self.actionBuy_Me_A_Coffee.setObjectName("actionBuy_Me_A_Coffee")
         self.actionClose = QtWidgets.QAction(MainWindow)
         self.actionClose.setObjectName("actionClose")
+        self.actionSave_all = QtWidgets.QAction(MainWindow)
+        self.actionSave_all.setObjectName("actionSave_all")
         self.menuOpen.addAction(self.actionOpen)
         self.menuOpen.addAction(self.actionCreate)
         self.menuOpen.addAction(self.actionSave)
         self.menuOpen.addAction(self.actionSave_as)
         self.menuOpen.addAction(self.actionExit)
         self.menuOpen.addAction(self.actionClose)
+        self.menuOpen.addAction(self.actionSave_all)
         self.menuAbout.addAction(self.actionAboutQt)
         self.menuAbout.addAction(self.actionAboutFluEdit)
         self.menuAbout.addAction(self.actionAboutPython)
@@ -129,6 +132,12 @@ class Ui_MainWindow(object):
         self.actionOpen.triggered.connect(MainWindow.on_open_file)
         self.actionCreate.triggered.connect(MainWindow.on_create_file)
         self.actionClose.triggered.connect(MainWindow.notimplemented)
+        self.actionSave_all.triggered.connect(MainWindow.notimplemented)
+        self.actionSave.triggered.connect(MainWindow.notimplemented)
+        self.actionSave_as.triggered.connect(MainWindow.notimplemented)
+        self.actionFind_message.triggered.connect(MainWindow.on_find_message)
+        self.actionFindNext.triggered.connect(MainWindow.on_find_next)
+        self.actionFind_message_id.triggered.connect(MainWindow.on_find_message_id)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -164,5 +173,6 @@ class Ui_MainWindow(object):
         self.actionGitter.setText(_translate("MainWindow", "Gitter"))
         self.actionBuy_Me_A_Coffee.setText(_translate("MainWindow", "Buy Me A Coffee"))
         self.actionClose.setText(_translate("MainWindow", "Close"))
+        self.actionSave_all.setText(_translate("MainWindow", "Save all"))
 
 

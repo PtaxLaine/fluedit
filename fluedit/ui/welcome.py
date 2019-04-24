@@ -37,6 +37,8 @@ class Ui_Welcome(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.retranslateUi(Welcome)
+        self.open_file_button.clicked.connect(Welcome.on_open_file)
+        self.create_file_button.clicked.connect(Welcome.on_create_file)
         QtCore.QMetaObject.connectSlotsByName(Welcome)
 
     def retranslateUi(self, Welcome):

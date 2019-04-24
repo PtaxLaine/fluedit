@@ -296,5 +296,127 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>is_draft_box</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Editor</receiver>
+   <slot>on_draft_box_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comments_edit</sender>
+   <signal>textChanged()</signal>
+   <receiver>Editor</receiver>
+   <slot>on_comment_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>672</x>
+     <y>456</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>translited_message_edit</sender>
+   <signal>textChanged()</signal>
+   <receiver>Editor</receiver>
+   <slot>on_message_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>432</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>create_message_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Editor</receiver>
+   <slot>add_message()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fliter_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>Editor</receiver>
+   <slot>on_fliter_changed(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>messages_list</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>Editor</receiver>
+   <slot>on_current_row_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>Editor</receiver>
+   <slot>on_tab_changed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_message_changed()</slot>
+  <slot>on_comment_changed()</slot>
+  <slot>on_draft_box_changed(int)</slot>
+  <slot>on_fliter_changed(QString)</slot>
+  <slot>on_current_row_changed(int)</slot>
+  <slot>on_tab_changed(int)</slot>
+  <slot>add_message()</slot>
+ </slots>
 </ui>

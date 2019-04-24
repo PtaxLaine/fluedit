@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QApplication, QInputDialog, QMessageBox, QL
 from PyQt5 import Qt
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 from PyQt5.QtGui import QColor, QBrush, QIcon
+from PyQt5.QtCore import pyqtSignal
 from .ui import editor
 from .highlighter import Highlighter
 from .playground import Playground
@@ -17,6 +18,9 @@ def build(key, value):
 
 
 class Editor(QWidget, editor.Ui_Editor):
+    changed = pyqtSignal()
+    saved = pyqtSignal()
+
     def __init__(self, filename):
         super().__init__()
         self.setupUi(self)
@@ -27,20 +31,12 @@ class Editor(QWidget, editor.Ui_Editor):
         self.config_widget = EditorConfig()
         self.tab_config_layout.addWidget(self.config_widget)
 
-        self.tabWidget.currentChanged.connect(self.on_tab_changed)
-        self.is_draft_box.stateChanged.connect(self.on_draft_box_changed)
-
-        self.create_message_button.clicked.connect(self.on_add_item)
-        self.messages_list.currentRowChanged.connect(self.onCurrentRowChanged)
-
         self.textHighlighter = Highlighter(self.translited_message_edit)
-        self.translited_message_edit.textChanged.connect(self.onTextChanged)
-
-        self.fliter_box.currentTextChanged.connect(self.on_fliter_changed)
 
         self.messages = {}
         self.find_msg_generator = None
         self.current_message = None
+        self.is_modificated = False
 
         self.filename = filename
         if filename:
@@ -51,6 +47,10 @@ class Editor(QWidget, editor.Ui_Editor):
         self.messages_list.setCurrentRow(0)
         if self.messages:
             self.current_message = self.messages[self.messages_list.item(0).text()]
+
+    def on_changed(self):
+        self.is_modificated = True
+        self.changed.emit()
 
     def load_file(self, filename):
         def offset_to_line(data, offset: int) -> (int, str):
@@ -134,27 +134,37 @@ class Editor(QWidget, editor.Ui_Editor):
 
     def on_draft_box_changed(self, value):
         msg = self.current_message
-        msg.draft = value == Qt.Qt.Checked
-        self.update_list_item(self.messages_list.currentItem(), msg)
+        if msg:
+            draft = value == Qt.Qt.Checked
+            if draft != msg.draft:
+                msg.draft = draft
+                self.on_changed()
+                self.update_list_item(self.messages_list.currentItem(), msg)
 
-    def onTextChanged(self):
+    def on_comment_changed(self):
+        pass
+
+    def on_message_changed(self):
         if self.current_message:
             plain = self.translited_message_edit.toPlainText()
-            self.current_message.message = plain
-            self.update_list_item(self.messages_list.currentItem(), self.current_message)
             self.playground.translited_message_edit.setPlainText(plain)
+            if self.current_message.message != plain:
+                self.on_changed()
+                self.current_message.message = plain
+                self.update_list_item(self.messages_list.currentItem(), self.current_message)
 
-            syntax = fluent.syntax.FluentParser()
-            entries = syntax.parse(build("f", plain))
-            for enity in entries.body:
-                if isinstance(enity, fluent.syntax.ast.Junk):
-                    for ann in enity.annotations:
-                        print(ann.message)
-                        print(ann.args)
-                        print(enity.span)
-                        # self.textHighlighter.set_error((enity.span.start-4, enity.span.end-4), ann.message)
+                # syntax = fluent.syntax.FluentParser()
+                # entries = syntax.parse(build("f", plain))
+                # for enity in entries.body:
+                #     if isinstance(enity, fluent.syntax.ast.Junk):
+                #         for ann in enity.annotations:
+                #             print(ann.message)
+                #             print(ann.args)
+                #             print(enity.span)
+                # self.textHighlighter.set_error((enity.span.start-4, enity.span.end-4), ann.message)
 
-    def onCurrentRowChanged(self, row):
+    def on_current_row_changed(self, row):
+        self.playground.clean()
         item = self.messages_list.item(row)
         if not item:
             return
@@ -164,7 +174,6 @@ class Editor(QWidget, editor.Ui_Editor):
         self.translited_message_edit.setPlainText(msg.message)
         self.comments_edit.setPlainText(msg.comment if msg.comment else "")
         self.is_draft_box.setCheckState(Qt.Qt.Checked if msg.draft else Qt.Qt.Unchecked)
-        self.playground.clean()
 
     def create_item(self, message) -> QListWidgetItem:
         item = QListWidgetItem(message.key)
@@ -183,7 +192,7 @@ class Editor(QWidget, editor.Ui_Editor):
             icon = QIcon(':/icons/list-done.png')
         item.setIcon(icon)
 
-    def on_add_item(self):
+    def add_message(self):
         text, _ = QInputDialog.getText(self, "item name", "item nnnname")
         if text:
             if text in self.messages:

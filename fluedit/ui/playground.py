@@ -14,6 +14,7 @@ class Ui_Playground(object):
         Playground.setObjectName("Playground")
         Playground.resize(739, 483)
         self.verticalLayout = QtWidgets.QVBoxLayout(Playground)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.splitter_4 = QtWidgets.QSplitter(Playground)
         self.splitter_4.setOrientation(QtCore.Qt.Horizontal)
@@ -95,6 +96,11 @@ class Ui_Playground(object):
         self.verticalLayout.addWidget(self.splitter_4)
 
         self.retranslateUi(Playground)
+        self.language_box.currentTextChanged['QString'].connect(Playground.compile)
+        self.text_direction_box.currentTextChanged['QString'].connect(Playground.compile)
+        self.variables_edit.textChanged.connect(Playground.compile)
+        self.translited_message_edit.textChanged.connect(Playground.update_variables)
+        self.translited_message_edit.textChanged.connect(Playground.compile)
         QtCore.QMetaObject.connectSlotsByName(Playground)
 
     def retranslateUi(self, Playground):

@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QSplitter" name="splitter_4">
      <property name="orientation">
@@ -159,5 +171,90 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>language_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>Playground</receiver>
+   <slot>compile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>text_direction_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>Playground</receiver>
+   <slot>compile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>variables_edit</sender>
+   <signal>textChanged()</signal>
+   <receiver>Playground</receiver>
+   <slot>compile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>translited_message_edit</sender>
+   <signal>textChanged()</signal>
+   <receiver>Playground</receiver>
+   <slot>update_variables()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>translited_message_edit</sender>
+   <signal>textChanged()</signal>
+   <receiver>Playground</receiver>
+   <slot>compile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>compile()</slot>
+  <slot>update_variables()</slot>
+ </slots>
 </ui>
