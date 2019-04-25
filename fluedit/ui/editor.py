@@ -17,6 +17,8 @@ class Ui_Editor(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.tabWidget = QtWidgets.QTabWidget(Editor)
+        self.tabWidget.setDocumentMode(False)
+        self.tabWidget.setTabBarAutoHide(False)
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")

@@ -46,13 +46,25 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import</string>
+     </property>
+     <addaction name="actionImportFTL"/>
+     <addaction name="actionImportSourceCode"/>
+    </widget>
     <addaction name="actionOpen"/>
     <addaction name="actionCreate"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
-    <addaction name="actionExit"/>
-    <addaction name="actionClose"/>
     <addaction name="actionSave_all"/>
+    <addaction name="separator"/>
+    <addaction name="menuImport"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
+    <addaction name="actionClose_all"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -85,16 +97,18 @@
     <addaction name="actionWiki"/>
     <addaction name="menuOther"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
+   <widget class="QMenu" name="menuSearch">
     <property name="title">
-     <string>Tools</string>
+     <string>Search</string>
     </property>
     <addaction name="actionFind_message_id"/>
     <addaction name="actionFind_message"/>
     <addaction name="actionFindNext"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind_in_memories"/>
    </widget>
    <addaction name="menuOpen"/>
-   <addaction name="menuTools"/>
+   <addaction name="menuSearch"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -220,6 +234,26 @@
   <action name="actionSave_all">
    <property name="text">
     <string>Save all</string>
+   </property>
+  </action>
+  <action name="actionImportFTL">
+   <property name="text">
+    <string>From *.ftl</string>
+   </property>
+  </action>
+  <action name="actionImportSourceCode">
+   <property name="text">
+    <string>From source code</string>
+   </property>
+  </action>
+  <action name="actionClose_all">
+   <property name="text">
+    <string>Close all</string>
+   </property>
+  </action>
+  <action name="actionFind_in_memories">
+   <property name="text">
+    <string>Find in memories</string>
    </property>
   </action>
  </widget>
@@ -582,6 +616,70 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>on_find_message_id()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImportSourceCode</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImportFTL</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose_all</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFind_in_memories</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>notimplemented()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

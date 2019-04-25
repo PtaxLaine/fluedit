@@ -17,7 +17,13 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.editors = []
         self.editor_tabs = QTabWidget()
+        self.editor_tabs.setDocumentMode(True)
+        self.editor_tabs.setTabsClosable(True)
+        self.editor_tabs.setMovable(True)
+        self.editor_tabs.setTabBarAutoHide(True)
         self.editor_tabs.hide()
+        self.editor_tabs.tabCloseRequested.connect(self.notimplemented)
+        self.editor_tabs.currentChanged.connect(self.on_tab_current_changed)
         self.layout.addWidget(self.editor_tabs)
 
         self.welcome.open_file_button.clicked.connect(self.on_open_file)
@@ -30,6 +36,14 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
     def notimplemented(self):
         raise NotImplementedError()
+
+    def on_tab_current_changed(self, index):
+        if index >= 0:
+            text = self.editor_tabs.tabText(index)
+            self.update_title(text)
+
+    def update_title(self, text):
+        self.setWindowTitle(f'fluedit \u2013 {text}')
 
     def on_about_qt(self):
         QApplication.instance().aboutQt()

@@ -10,6 +10,8 @@ fluent-syntax = {editable = true,git = "https://github.com/projectfluent/python-
 fluent-runtime = {editable = true,git = "https://github.com/projectfluent/python-fluent",ref = "d28bc14fa0c8ae336df55018031654e43229a945",subdirectory = "fluent.runtime"}
 pyqt5 = "*"
 pytest = "*"
+pyopenssl = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
