@@ -1,15 +1,11 @@
-import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QTabWidget
-from PyQt5.QtCore import QSettings, qFatal
-from PyQt5.QtGui import QIcon
+import os
+
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTabWidget
+
+from .editor import Editor
+from .license import LicenseDialog
 from .ui import mainwindow
 from .welcome import Welcome
-from .editor import Editor
-import sys
-import os
-import traceback
-from . import resource_rc
-from .license import LicenseDialog
 
 
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):

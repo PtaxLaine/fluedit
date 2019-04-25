@@ -1,16 +1,7 @@
-import sys
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QToolBox, QStackedWidget, QFileDialog, QMessageBox, QTabWidget, \
-    QDialog, QWidget
-from PyQt5.QtCore import QSettings, qFatal
-from PyQt5.QtGui import QIcon
-from .ui import license_dialog
-from .welcome import Welcome
 from PyQt5.QtCore import pyqtSignal
-from .editor import Editor
-import sys
-import os
-import traceback
-from . import resource_rc
+from PyQt5.QtWidgets import QTextEdit, QToolBox, QDialog
+
+from .ui import license_dialog
 
 
 class LicenseDialog(QDialog, license_dialog.Ui_Dialog):

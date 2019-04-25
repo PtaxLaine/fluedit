@@ -1,16 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QTabWidget
-from PyQt5.QtCore import QSettings, qFatal
-from PyQt5.QtGui import QIcon
-from .ui import mainwindow
-from .welcome import Welcome
-from .editor import Editor
-import sys
-import os
 import traceback
+
+from PyQt5.QtCore import QSettings, qFatal
+from PyQt5.QtWidgets import QApplication, QMessageBox
+
+# noinspection PyUnresolvedReferences
 from . import resource_rc
-from .main import MainWindow
 from .license import LicenseDialog
+from .main import MainWindow
 
 
 def except_hook(cls, exception, tb):

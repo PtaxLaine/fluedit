@@ -1,16 +1,13 @@
-import sys
 import json
-from PyQt5.QtWidgets import QWidget, QApplication, QInputDialog, QMessageBox
-from PyQt5 import Qt
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt5.QtCore import pyqtSignal
-from .ui import playground
-
-from .highlighter import Highlighter
 import re
+
 import fluent.runtime
 import fluent.syntax
 import fluent.syntax.ast
+from PyQt5.QtWidgets import QWidget
+
+from .highlighter import Highlighter
+from .ui import playground
 
 
 class Playground(QWidget, playground.Ui_Playground):

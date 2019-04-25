@@ -1,6 +1,7 @@
-from PyQt5.QtGui import QSyntaxHighlighter, QTextDocument, QTextCharFormat, QColor
-from PyQt5 import Qt
 import re
+
+from PyQt5 import Qt
+from PyQt5.QtGui import QSyntaxHighlighter, QTextCharFormat, QColor
 
 
 class HighlightingRule:

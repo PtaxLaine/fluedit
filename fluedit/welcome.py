@@ -1,8 +1,6 @@
-import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QFileDialog
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QWidget
+
 from .ui import welcome
-from .editor import Editor
 
 
 class Welcome(QWidget, welcome.Ui_Welcome):

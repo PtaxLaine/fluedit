@@ -1,5 +1,5 @@
-import re
 import base64
+import re
 
 
 # todo: msg_author, msg_date

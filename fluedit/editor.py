@@ -1,16 +1,16 @@
-import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QTextEdit, QInputDialog, QMessageBox, QListWidgetItem
-from PyQt5 import Qt
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt5.QtGui import QColor, QBrush, QIcon
-from PyQt5.QtCore import pyqtSignal
-from .ui import editor
-from .highlighter import Highlighter
-from .playground import Playground
-from .editor_config import EditorConfig
 import fluent.syntax
 import fluent.syntax.ast
+from PyQt5 import Qt
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QWidget, QInputDialog, QMessageBox, QListWidgetItem
+
+from .editor_config import EditorConfig
+from .highlighter import Highlighter
 from .message import Message
+from .playground import Playground
+from .ui import editor
 
 
 def build(key, value):
