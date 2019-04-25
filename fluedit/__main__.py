@@ -16,9 +16,12 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.welcome = Welcome()
-        self.editors = []
-        self.editor_tabs = None  # type: QTabWidget or None
         self.layout.addWidget(self.welcome)
+
+        self.editors = []
+        self.editor_tabs = QTabWidget()
+        self.editor_tabs.hide()
+        self.layout.addWidget(self.editor_tabs)
 
         self.welcome.open_file_button.clicked.connect(self.on_open_file)
         self.welcome.create_file_button.clicked.connect(self.on_create_file)
@@ -71,13 +74,8 @@ class ExampleApp(QMainWindow, mainwindow.Ui_MainWindow):
         if file:
             file = os.path.abspath(file)
 
-        if self.welcome:
-            self.welcome.deleteLater()
-            self.welcome = None
-
-        if not self.editor_tabs:
-            self.editor_tabs = QTabWidget()
-            self.layout.addWidget(self.editor_tabs)
+        self.welcome.hide()
+        self.editor_tabs.show()
 
         if file:
             for x in self.editors:

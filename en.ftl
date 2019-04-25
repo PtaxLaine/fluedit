@@ -11,8 +11,10 @@ console-menu-dashboard = Dashboard
 console-menu-stream_status = Stream status
 console-menu-history = History
 
+# fluedit:original U29tZXRoaW5n
 console-menu-something = Something
 
+# fluedit:file c:\mimic0000000000000000000000000000\foo.bar:4096
 console-menu-just_muline =
  one
  twi

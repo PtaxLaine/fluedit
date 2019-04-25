@@ -179,7 +179,10 @@ class Editor(QWidget, editor.Ui_Editor):
         msg = self.messages[item]
         self.translited_message_edit.setPlainText(msg.message)
         self.comments_edit.setPlainText(msg.comment if msg.comment else "")
+        self.original_message_edit.setPlainText(msg.original if msg.original else "")
         self.is_draft_box.setCheckState(Qt.Qt.Checked if msg.draft else Qt.Qt.Unchecked)
+        self.msg_source_fname_box.setText(msg.file[0] if msg.file else "")
+        self.msg_source_line_box.setText(str(msg.file[1]) if msg.file else "")
 
     def create_item(self, message) -> QListWidgetItem:
         item = QListWidgetItem(message.key)
