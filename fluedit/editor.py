@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QInputDialog, QMessageBox, QListWidgetItem
+from PyQt5.QtWidgets import QWidget, QApplication, QTextEdit, QInputDialog, QMessageBox, QListWidgetItem
 from PyQt5 import Qt
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 from PyQt5.QtGui import QColor, QBrush, QIcon

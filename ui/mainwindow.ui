@@ -293,7 +293,7 @@
    <sender>actionLicense</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>show_license()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -602,5 +602,6 @@
   <slot>on_find_message()</slot>
   <slot>on_find_message_id()</slot>
   <slot>on_find_next()</slot>
+  <slot>show_license()</slot>
  </slots>
 </ui>

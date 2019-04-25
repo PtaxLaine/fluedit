@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
         self.actionAboutFluEdit.triggered.connect(MainWindow.notimplemented)
         self.actionAboutPython.triggered.connect(MainWindow.notimplemented)
         self.actionAboutFluent.triggered.connect(MainWindow.notimplemented)
-        self.actionLicense.triggered.connect(MainWindow.notimplemented)
+        self.actionLicense.triggered.connect(MainWindow.show_license)
         self.actionGithub.triggered.connect(MainWindow.notimplemented)
         self.actionGitlab.triggered.connect(MainWindow.notimplemented)
         self.actionIssues.triggered.connect(MainWindow.notimplemented)
