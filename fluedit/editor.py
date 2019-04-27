@@ -43,6 +43,15 @@ class Editor(QWidget, editor.Ui_Editor):
             if self.messages:
                 self.messages_list.setCurrentRow(0)
 
+    def delete_message(self, msg: str or Message):
+        if isinstance(msg, str):
+            msg = self.messages[msg]
+        for x in self.messages_list.findItems(msg.key, Qt.Qt.MatchExactly):
+            row = self.messages_list.row(x)
+            self.messages_list.takeItem(row)
+        del self.messages[msg.key]
+        self.on_changed()
+
     def on_messages_list_menu(self, pos):
         item = self.messages_list.itemAt(pos)
         if item:
@@ -53,9 +62,7 @@ class Editor(QWidget, editor.Ui_Editor):
                 quest = QMessageBox.question(self, '', f'Delete message "{msg.key}"?',
                                              QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                 if quest == QMessageBox.Yes:
-                    del self.messages[msg.key]
-                    self.messages_list.takeItem(row)
-                    self.on_changed()
+                    self.delete_message(msg.key)
 
             def on_rename():
                 text, _ = QInputDialog.getText(self, None, "new message id")

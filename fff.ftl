@@ -11,8 +11,6 @@ console-menu-dashboard = Dashboard
 
 console-menu-stream_status = Stream status
 
-console-menu-history = History
-
 # fluedit:original U29tZXRoaW5n
 console-menu-something = Something
 

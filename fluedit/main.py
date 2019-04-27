@@ -9,6 +9,8 @@ from .license import LicenseDialog
 from .ui import mainwindow
 from .welcome import Welcome
 from .memoirs import Memoirs
+from .import_ftl import ImportFtl
+from . import common
 
 
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
@@ -33,7 +35,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.update_recent()
 
-        # self.open_file("./en.ftl")
+        self.open_file("./en.ftl")
 
     def closeEvent(self, ev):
         for _, editor in self._iter_tabs():
@@ -61,7 +63,9 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         raise NotImplementedError()
 
     def on_import_ftl(self):
-        raise NotImplementedError()
+        if self.current_editor:
+            im = ImportFtl(self.current_editor)
+            im.show()
 
     def on_tab_current_changed(self, index):
         if index >= 0:
@@ -86,7 +90,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         file, _ = QFileDialog.getOpenFileName(self,
-                                              filter="Fluent Translation List (*.ftl);;Any files (*)",
+                                              filter=common.FTL_FILE_FILTER,
                                               options=options)
         if file:
             self.open_file(file)
