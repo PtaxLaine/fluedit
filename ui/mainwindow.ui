@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>FluEdit</string>
   </property>
   <property name="windowIcon">
    <iconset theme=":/icons/qt-logo.png">

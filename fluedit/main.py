@@ -35,8 +35,6 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.update_recent()
 
-        self.open_file("./en.ftl")
-
     def closeEvent(self, ev):
         for _, editor in self._iter_tabs():
             if editor.is_modificated:
@@ -75,7 +73,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
             self.welcome.show()
 
     def update_title(self, text):
-        self.setWindowTitle(f'fluedit \u2013 {text}')
+        self.setWindowTitle(f'FluEdit \u2013 {text}')
 
     def on_about_qt(self):
         QApplication.instance().aboutQt()

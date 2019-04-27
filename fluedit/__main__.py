@@ -30,7 +30,7 @@ def main():
     app = QApplication(sys.argv)
     sys.excepthook = except_hook
     app.setOrganizationName("ptaxa.net")
-    app.setApplicationName("fluedit")
+    app.setApplicationName("FluEdit")
 
     settings = QSettings()
     if settings.value("license_accepted") != "true":

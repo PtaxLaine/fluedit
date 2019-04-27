@@ -172,7 +172,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "FluEdit"))
         self.menuOpen.setTitle(_translate("MainWindow", "File"))
         self.menuImport.setTitle(_translate("MainWindow", "Import"))
         self.menuOpen_recent.setTitle(_translate("MainWindow", "Open recent"))
