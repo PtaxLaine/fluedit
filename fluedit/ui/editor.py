@@ -181,7 +181,7 @@ class Ui_Editor(object):
         self.is_draft_box.stateChanged['int'].connect(Editor.on_draft_box_changed)
         self.comments_edit.textChanged.connect(Editor.on_comment_changed)
         self.translited_message_edit.textChanged.connect(Editor.on_message_changed)
-        self.create_message_button.clicked.connect(Editor.add_message)
+        self.create_message_button.clicked.connect(Editor.on_create_message)
         self.fliter_box.currentTextChanged['QString'].connect(Editor.on_fliter_changed)
         self.messages_list.currentRowChanged['int'].connect(Editor.on_current_row_changed)
         self.tabWidget.currentChanged['int'].connect(Editor.on_tab_changed)

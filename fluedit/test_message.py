@@ -99,3 +99,33 @@ class TestMessage(unittest.TestCase):
                       "14584842\nfluedit:file c:\\proj\\foo.bar:778")
         self.assertEqual(msg.to_string(),
                          "# fluedit:file c:\\proj\\foo.bar:778\n# 14584842\n13602927231834819367 = 1170623\n 50813\n 2145\r\n 0216")
+
+    def test_file_parse(self):
+        file = "foo=bar\n# comm\nbar=baz\nklkl"
+        messages, errors = Message.parse_file(file)
+
+        self.assertEqual(['line: 4   E0003: Expected token: "="'], errors)
+        self.assertEqual(2, len(messages))
+
+        self.assertEqual("foo", messages[0].key)
+        self.assertEqual("bar", messages[0].message)
+        self.assertEqual(False, messages[0].draft)
+        self.assertEqual(None, messages[0].original)
+        self.assertEqual(None, messages[0].file)
+        self.assertEqual(None, messages[0].comment)
+
+        self.assertEqual("bar", messages[1].key)
+        self.assertEqual("baz", messages[1].message)
+        self.assertEqual(False, messages[1].draft)
+        self.assertEqual(None, messages[1].original)
+        self.assertEqual(None, messages[1].file)
+        self.assertEqual("comm", messages[1].comment)
+
+    def test_build_file(self):
+        messages = [
+            Message("foo", "bar", "comico"),
+            Message("bin", "bond", "fluedit:draft")
+        ]
+        result = Message.build_file(messages)
+        self.assertEqual("# comico\nfoo = bar\n\n# fluedit:draft\nbin = bond\n",
+                         result)

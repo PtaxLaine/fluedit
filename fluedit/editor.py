@@ -1,16 +1,14 @@
-import fluent.syntax
-import fluent.syntax.ast
 from PyQt5 import Qt
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import QWidget, QInputDialog, QMessageBox, QListWidgetItem
+from PyQt5.QtWidgets import QWidget, QInputDialog, QMessageBox, QListWidgetItem, QMenu, QAction
 
-from .common import offset_to_line
 from .editor_config import EditorConfig
 from .message import Message
 from .playground import Playground
 from .ui import editor
+import shutil
 
 
 class Editor(QWidget, editor.Ui_Editor):
@@ -21,6 +19,15 @@ class Editor(QWidget, editor.Ui_Editor):
         super().__init__()
         self.setupUi(self)
 
+        self.messages = {}
+        self.find_msg_generator = None
+        self.current_message = None
+        self.is_modificated = False
+        self.filename = filename
+
+        self.messages_list.setContextMenuPolicy(Qt.Qt.CustomContextMenu)
+        self.messages_list.customContextMenuRequested.connect(self.on_messages_list_menu)
+
         self.playground = Playground()
         self.playground.setEnabled(False)
         self.tab_playground_layout.addWidget(self.playground)
@@ -29,55 +36,60 @@ class Editor(QWidget, editor.Ui_Editor):
         self.tab_config_layout.addWidget(self.config_widget)
 
         self.translited_message_edit.error.connect(self.on_fluent_error)
-
-        self.messages = {}
-        self.find_msg_generator = None
-        self.current_message = None
-        self.is_modificated = False
-
-        self.filename = filename
         if filename:
-            self.messages = self.load_file(filename)
+            for msg in self._read_file(filename):
+                self.append_message(msg)
+            if self.messages:
+                self.messages_list.setCurrentRow(0)
 
-        for x in self.messages.values():
-            self.messages_list.addItem(self.create_item(x))
-        self.messages_list.setCurrentRow(0)
-        if self.messages:
-            self.current_message = self.messages[self.messages_list.item(0).text()]
+    def on_messages_list_menu(self, pos):
+        item = self.messages_list.itemAt(pos)
+        if item:
+            row = self.messages_list.row(item)
+            msg = self.messages[item.text()]
+
+            def on_delete():
+                quest = QMessageBox.question(self, '', f'Delete message "{msg.key}"?',
+                                             QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                if quest == QMessageBox.Yes:
+                    del self.messages[msg.key]
+                    self.messages_list.takeItem(row)
+                    self.on_changed()
+
+            def on_rename():
+                text, _ = QInputDialog.getText(self, None, "new message id")
+                if text:
+                    if text in self.messages:
+                        v = QMessageBox.warning(self, None, f'item {text} already exist, continue?',
+                                                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                        if QMessageBox.No == v:
+                            return
+                        self._remove_message(text)
+                    self._remove_message(msg.key)
+                    new = msg.copy(text)
+                    self.append_message(new)
+                    self.on_changed()
+
+            actions = [
+                ("Delete message", on_delete),
+                ("Rename message", on_rename),
+            ]
+
+            menu = QMenu()
+            for name, cb in actions:
+                act = QAction(name, menu)
+                act.triggered.connect(cb)
+                menu.addAction(act)
+            menu.exec(self.messages_list.mapToGlobal(pos))
 
     def on_fluent_error(self, error):
         if self.current_message:
             if error != self.current_message.error:
                 self.current_message.error = error
-                self.update_list_item(self.messages_list.currentItem(), self.current_message)
 
     def on_changed(self):
         self.is_modificated = True
         self.changed.emit()
-
-    def load_file(self, filename):
-
-        messages = {}
-        with open(filename, encoding='UTF-8') as fs:
-            file_data = fs.read()
-            syntax = fluent.syntax.FluentParser()
-            entries = syntax.parse(file_data)
-            for entity in entries.body:
-                if isinstance(entity, fluent.syntax.ast.Message):
-                    comment = entity.comment.content if entity.comment else None
-                    message = file_data[entity.value.span.start:entity.value.span.end]
-                    key = entity.id.name
-                    messages[key] = Message(key, message, comment)
-                elif isinstance(entity, fluent.syntax.ast.Junk):
-                    pos = offset_to_line(file_data, entity.span.start)
-                    QMessageBox.warning(self, '', 'file load error\n' +
-                                        "\n".join(map(lambda x: f'line: {pos[0]}   {x.code}: {x.message}',
-                                                      entity.annotations)))
-                elif isinstance(entity, fluent.syntax.ast.ResourceComment):
-                    pass
-                elif isinstance(entity, fluent.syntax.ast.GroupComment):
-                    pass
-        return messages
 
     def on_tab_changed(self, value):
         if not self.current_message:
@@ -108,28 +120,12 @@ class Editor(QWidget, editor.Ui_Editor):
         elif text == 'Without comments':
             messages = filter(lambda x: not x.comment, messages)
         for msg in messages:
-            item = self.create_item(msg)
+            item = self._create_item(msg)
             self.messages_list.addItem(item)
-
-    def on_save(self):
-        if self.filename:
-            self.save_file(self.filename)
-        else:
-            self.on_save_as()
-
-    def on_save_as(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        file, _ = QFileDialog.getSaveFileName(self,
-                                              filter="Fluent Translation List (*.ftl)",
-                                              options=options)
-        if file:
-            if not file.endswith('.ftl'):
-                file += '.ftl'
-            self.save_file(file)
-
-    def save_file(self, filename):
-        raise NotImplementedError()
+        self.messages_list.setCurrentRow(0)
+        current = self.messages_list.currentItem()
+        if current:
+            self.current_message = self.messages[current.text()]
 
     def on_draft_box_changed(self, value):
         msg = self.current_message
@@ -138,7 +134,10 @@ class Editor(QWidget, editor.Ui_Editor):
             if draft != msg.draft:
                 msg.draft = draft
                 self.on_changed()
-                self.update_list_item(self.messages_list.currentItem(), msg)
+
+    def on_saved(self):
+        self.is_modificated = False
+        self.saved.emit()
 
     def on_comment_changed(self):
         if self.current_message:
@@ -154,7 +153,6 @@ class Editor(QWidget, editor.Ui_Editor):
             if self.current_message.message != plain:
                 self.on_changed()
                 self.current_message.message = plain
-                self.update_list_item(self.messages_list.currentItem(), self.current_message)
 
     def on_current_row_changed(self, row):
         self.playground.clean()
@@ -171,12 +169,52 @@ class Editor(QWidget, editor.Ui_Editor):
         self.msg_source_fname_box.setText(msg.file[0] if msg.file else "")
         self.msg_source_line_box.setText(str(msg.file[1]) if msg.file else "")
 
-    def create_item(self, message) -> QListWidgetItem:
+    def on_create_message(self):
+        text, _ = QInputDialog.getText(self, None, "item name")
+        if text:
+            if text in self.messages:
+                v = QMessageBox.warning(self, None, f'item {text} already exist, continue?',
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                if QMessageBox.No == v:
+                    return
+                else:
+                    for x in self.messages_list.findItems(text, Qt.Qt.MatchExactly):
+                        self.messages_list.takeItem(self.messages_list.row(x))
+                        break
+            msg = Message(text, "", None)
+            self.append_message(msg)
+
+    def _remove_message(self, key):
+        if key in self.messages:
+            for x in self.messages_list.findItems(key, Qt.Qt.MatchExactly):
+                row = self.messages_list.row(x)
+                self.messages_list.takeItem(row)
+            del self.messages[key]
+
+    def save_file(self, filename):
+        data = Message.build_file(self.messages.values())
+        tmp_file = f'{filename}.tmp'
+        with open(tmp_file, 'wb') as fs:
+            fs.write(data.encode())
+        shutil.move(tmp_file, filename)
+
+    def _read_file(self, filename):
+        with open(filename, encoding='UTF-8') as fs:
+            file_data = fs.read()
+            messages, errors = Message.parse_file(file_data)
+
+            if errors:
+                QMessageBox.warning(self, None,
+                                    'file load error\n' + '\n'.join(errors))
+
+            return messages
+
+    def _create_item(self, message) -> QListWidgetItem:
         item = QListWidgetItem(message.key)
-        self.update_list_item(item, message)
+        self._update_list_item(item, message)
         return item
 
-    def update_list_item(self, item, message):
+    def _update_list_item(self, item, message):
         if message.error:
             icon = QIcon(':/icons/list-error.png')
         elif message.draft:
@@ -187,34 +225,30 @@ class Editor(QWidget, editor.Ui_Editor):
             icon = QIcon(':/icons/list-done.png')
         item.setIcon(icon)
 
-    def add_message(self):
-        text, _ = QInputDialog.getText(self, "item name", "item nnnname")
-        if text:
-            if text in self.messages:
-                v = QMessageBox.warning(self, '', f'item {text} already exist, continue?',
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-                if QMessageBox.No == v:
-                    return
-                else:
-                    for x in self.messages_list.findItems(text, Qt.Qt.MatchExactly):
-                        self.messages_list.takeItem(self.messages_list.row(x))
-                        break
-            msg = Message(text, "", None)
-            self.messages[text] = msg
-            item = self.create_item(msg)
-            self.messages_list.addItem(item)
+    def append_message(self, message, set_current=False):
+        self.messages[message.key] = message
+        item = self._create_item(message)
+        self.messages_list.addItem(item)
+        if set_current:
             self.messages_list.setCurrentItem(item)
+
+        def on_changed():
+            item = list(self.messages_list.findItems(message.key, Qt.Qt.MatchExactly))
+            if item:
+                self._update_list_item(item[0], message)
+
+        message.changed.connect(on_changed)
 
     def find_next(self):
         if self.find_msg_generator:
             try:
                 next(self.find_msg_generator)
             except StopIteration:
-                QMessageBox.information(self, '', 'messages list end reached')
+                QMessageBox.information(self, None, 'messages list end reached')
 
     def find_msg_id_dialog(self):
         self.find_msg_generator = None
-        text, _ = QInputDialog.getText(self, "find message", "find message by id")
+        text, _ = QInputDialog.getText(self, None, "find message by id")
         if text:
             def gen():
                 for item in self.messages_list.findItems(text, Qt.Qt.MatchContains):
@@ -226,7 +260,7 @@ class Editor(QWidget, editor.Ui_Editor):
 
     def find_msg_dialog(self):
         self.find_msg_generator = None
-        text, _ = QInputDialog.getText(self, "find message", "find message by translated text")
+        text, _ = QInputDialog.getText(self, None, "find message by translated text")
         if text:
             text = text.lower()
 

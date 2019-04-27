@@ -53,6 +53,14 @@
      <addaction name="actionImportFTL"/>
      <addaction name="actionImportSourceCode"/>
     </widget>
+    <widget class="QMenu" name="menuOpen_recent">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Open recent</string>
+     </property>
+    </widget>
     <addaction name="actionOpen"/>
     <addaction name="actionCreate"/>
     <addaction name="actionSave"/>
@@ -63,6 +71,8 @@
     <addaction name="separator"/>
     <addaction name="actionClose"/>
     <addaction name="actionClose_all"/>
+    <addaction name="separator"/>
+    <addaction name="menuOpen_recent"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -254,6 +264,11 @@
   <action name="actionFind_in_memories">
    <property name="text">
     <string>Find in memories</string>
+   </property>
+  </action>
+  <action name="action2">
+   <property name="text">
+    <string>2</string>
    </property>
   </action>
  </widget>
@@ -519,7 +534,7 @@
    <sender>actionClose</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_close()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -535,7 +550,7 @@
    <sender>actionSave_all</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_save_all()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -551,7 +566,7 @@
    <sender>actionSave</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_save()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -567,7 +582,7 @@
    <sender>actionSave_as</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_save_as()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -663,7 +678,7 @@
    <sender>actionClose_all</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_close_all()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -701,5 +716,10 @@
   <slot>on_find_message_id()</slot>
   <slot>on_find_next()</slot>
   <slot>show_license()</slot>
+  <slot>on_save()</slot>
+  <slot>on_save_as()</slot>
+  <slot>on_save_all()</slot>
+  <slot>on_close()</slot>
+  <slot>on_close_all()</slot>
  </slots>
 </ui>

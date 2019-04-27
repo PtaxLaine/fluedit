@@ -327,7 +327,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>512</x>
-     <y>300</y>
+     <y>276</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
@@ -371,7 +371,7 @@
    <sender>create_message_button</sender>
    <signal>clicked()</signal>
    <receiver>Editor</receiver>
-   <slot>add_message()</slot>
+   <slot>on_create_message()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>139</x>
@@ -391,7 +391,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>154</x>
-     <y>526</y>
+     <y>476</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
@@ -439,6 +439,6 @@
   <slot>on_fliter_changed(QString)</slot>
   <slot>on_current_row_changed(int)</slot>
   <slot>on_tab_changed(int)</slot>
-  <slot>add_message()</slot>
+  <slot>on_create_message()</slot>
  </slots>
 </ui>

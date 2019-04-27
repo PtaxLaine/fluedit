@@ -1,27 +1,31 @@
-
 console-menu-profile = Profile
+
 console-menu-settings = Settings
+
 console-menu-logout = Logout
 
-# justcomment
-# fluedit:mimic
 # fluedit:draft
+# 
+# 
+# 
+# 
+# justcomment
 # just second comment
-console-menu-dashboard = Dashboard
+console-menu-dashboard = Dashboardf
+
 console-menu-stream_status = Stream status
+
 console-menu-history = History
 
 # fluedit:original U29tZXRoaW5n
 console-menu-something = Something
 
 # fluedit:file c:\mimic0000000000000000000000000000\foo.bar:4096
-console-menu-just_muline =
+console-menu-just_muline = 
  one
  twi
  three
 
-### threed
-## second
 # first
 # not first
 tabs-close-warning-multiple = { $count ->

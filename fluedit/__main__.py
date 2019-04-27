@@ -38,7 +38,8 @@ def main():
         window.accepted.connect(_license_accepted)
         window.show()
     else:
-        MainWindow().show()
+        wnd = MainWindow()
+        wnd.show()
     app.exec_()
 
 

@@ -31,9 +31,9 @@ class Ui_Welcome(object):
         self.label = QtWidgets.QLabel(Welcome)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.listView = QtWidgets.QListView(Welcome)
-        self.listView.setObjectName("listView")
-        self.verticalLayout.addWidget(self.listView)
+        self.recent_files = QtWidgets.QListWidget(Welcome)
+        self.recent_files.setObjectName("recent_files")
+        self.verticalLayout.addWidget(self.recent_files)
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.retranslateUi(Welcome)
