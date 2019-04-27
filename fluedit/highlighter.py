@@ -1,12 +1,13 @@
 import re
 
 from PyQt5 import Qt
-from PyQt5.QtGui import QSyntaxHighlighter, QTextCharFormat, QColor
+from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QSyntaxHighlighter, QTextCharFormat
 
 
 class HighlightingRule:
     def __init__(self, pattern, format):
-        self.pattern = re.compile(pattern)
+        self.pattern = re.compile(pattern, re.MULTILINE)
         self.format = format
 
 
@@ -30,17 +31,17 @@ class Highlighter(QSyntaxHighlighter):
         format.setForeground(Qt.Qt.darkBlue)
         self.rules = []
 
-        self.rules.append(HighlightingRule(r'\{\s*\$[a-zA-Z0-9_-]+\s*\}',
+        self.rules.append(HighlightingRule(r'\{\s*(\$[a-zA-Z0-9_-]+)\s*(?:(?:\})|(?:\-\>))',
                                            Format(). \
                                            setForeground(QColor(102, 153, 153)). \
                                            build()))
 
-        self.rules.append(HighlightingRule(r'\[[a-zA-Z0-9]+\]',
+        self.rules.append(HighlightingRule(r'(\[[a-zA-Z0-9]+\])',
                                            Format(). \
                                            setForeground(QColor(255, 153, 51)). \
                                            build()))
 
-        self.rules.append(HighlightingRule(r'\*\[[a-zA-Z0-9]+\]',
+        self.rules.append(HighlightingRule(r'(\*\[[a-zA-Z0-9]+\])',
                                            Format(). \
                                            setForeground(QColor(255, 102, 102)). \
                                            build()))
@@ -60,7 +61,7 @@ class Highlighter(QSyntaxHighlighter):
     def highlightBlock(self, text):
         for rule in self.rules:
             for match in rule.pattern.finditer(text):
-                span = match.span()
+                span = match.span(1)
                 self.setFormat(span[0], span[1] - span[0], rule.format)
 
         for span, tooltip in self.errors:

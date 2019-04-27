@@ -41,7 +41,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="translited_message_edit">
+        <widget class="FluentMessageEditor" name="translited_message_edit">
          <property name="acceptRichText">
           <bool>false</bool>
          </property>
@@ -170,6 +170,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FluentMessageEditor</class>
+   <extends>QTextEdit</extends>
+   <header>..fluent_message</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

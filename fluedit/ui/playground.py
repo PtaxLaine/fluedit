@@ -27,7 +27,7 @@ class Ui_Playground(object):
         self.label_3 = QtWidgets.QLabel(self.layoutWidget)
         self.label_3.setObjectName("label_3")
         self.verticalLayout_5.addWidget(self.label_3)
-        self.translited_message_edit = QtWidgets.QTextEdit(self.layoutWidget)
+        self.translited_message_edit = FluentMessageEditor(self.layoutWidget)
         self.translited_message_edit.setAcceptRichText(False)
         self.translited_message_edit.setObjectName("translited_message_edit")
         self.verticalLayout_5.addWidget(self.translited_message_edit)
@@ -120,3 +120,4 @@ class Ui_Playground(object):
         self.label_6.setText(_translate("Playground", "Console"))
 
 
+from ..fluent_message import FluentMessageEditor

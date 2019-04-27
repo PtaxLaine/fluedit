@@ -5,11 +5,11 @@ import re
 # todo: msg_author, msg_date
 
 class Message:
-    def __init__(self, key, message, comment=None, errors=None):
+    def __init__(self, key, message, comment=None):
         self.key = key
         self.message = message
         self.draft = False
-        self.errors = errors if errors else []
+        self.error = False
         self.original = None
         self.file = None
 

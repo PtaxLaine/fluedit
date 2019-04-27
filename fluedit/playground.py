@@ -5,25 +5,33 @@ import fluent.runtime
 import fluent.syntax
 import fluent.syntax.ast
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import QEvent
 
-from .highlighter import Highlighter
 from .ui import playground
 
 
 class Playground(QWidget, playground.Ui_Playground):
-    VARIABLE_DETECTOR = re.compile(r'\{\s*\$([a-zA-Z0-9_-]+)\s*\}', re.MULTILINE)
+    VARIABLE_DETECTOR = re.compile(r'\$([a-zA-Z0-9_-]+)', re.MULTILINE)
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.textHighlighter = Highlighter(self.translited_message_edit)
         self.variables = {}
+
+    def changeEvent(self, ev):
+        super().changeEvent(ev)
+        if ev.type() == QEvent.EnabledChange and self.isEnabled():
+            self.compile()
+            self.update_variables()
 
     def clean(self):
         self.variables = {}
         self.variables_updated()
 
     def compile(self):
+        if not self.isEnabled():
+            return
+
         msg = self.translited_message_edit.toPlainText()
         msg = f"msg = {msg}"
 
@@ -58,9 +66,11 @@ class Playground(QWidget, playground.Ui_Playground):
         self.variables_edit.setPlainText(js)
 
     def update_variables(self):
+        if not self.isEnabled():
+            return
+
         variables = set()
         msg = self.translited_message_edit.toPlainText()
-        print(msg)
         for var in Playground.VARIABLE_DETECTOR.finditer(msg):
             variables.add(var.group(1))
         update = False

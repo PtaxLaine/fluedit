@@ -6,15 +6,11 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QWidget, QInputDialog, QMessageBox, QListWidgetItem
 
+from .common import offset_to_line
 from .editor_config import EditorConfig
-from .highlighter import Highlighter
 from .message import Message
 from .playground import Playground
 from .ui import editor
-
-
-def build(key, value):
-    return key + " = " + value
 
 
 class Editor(QWidget, editor.Ui_Editor):
@@ -26,12 +22,13 @@ class Editor(QWidget, editor.Ui_Editor):
         self.setupUi(self)
 
         self.playground = Playground()
+        self.playground.setEnabled(False)
         self.tab_playground_layout.addWidget(self.playground)
 
         self.config_widget = EditorConfig()
         self.tab_config_layout.addWidget(self.config_widget)
 
-        self.textHighlighter = Highlighter(self.translited_message_edit)
+        self.translited_message_edit.error.connect(self.on_fluent_error)
 
         self.messages = {}
         self.find_msg_generator = None
@@ -48,19 +45,17 @@ class Editor(QWidget, editor.Ui_Editor):
         if self.messages:
             self.current_message = self.messages[self.messages_list.item(0).text()]
 
+    def on_fluent_error(self, error):
+        if self.current_message:
+            if error != self.current_message.error:
+                self.current_message.error = error
+                self.update_list_item(self.messages_list.currentItem(), self.current_message)
+
     def on_changed(self):
         self.is_modificated = True
         self.changed.emit()
-        if self.current_message:
-            print(self.current_message.to_string())
 
     def load_file(self, filename):
-        def offset_to_line(data, offset: int) -> (int, str):
-            line = 1
-            for i in range(offset):
-                if data[i] == '\n':
-                    line += 1
-            return line, data[offset:].split('\n', 1)[0].strip()
 
         messages = {}
         with open(filename, encoding='UTF-8') as fs:
@@ -87,6 +82,8 @@ class Editor(QWidget, editor.Ui_Editor):
     def on_tab_changed(self, value):
         if not self.current_message:
             return
+
+        self.playground.setEnabled(value == 1)
 
         plain = self.playground.translited_message_edit.toPlainText()
         if plain != self.current_message.message:
@@ -159,16 +156,6 @@ class Editor(QWidget, editor.Ui_Editor):
                 self.current_message.message = plain
                 self.update_list_item(self.messages_list.currentItem(), self.current_message)
 
-                # syntax = fluent.syntax.FluentParser()
-                # entries = syntax.parse(build("f", plain))
-                # for enity in entries.body:
-                #     if isinstance(enity, fluent.syntax.ast.Junk):
-                #         for ann in enity.annotations:
-                #             print(ann.message)
-                #             print(ann.args)
-                #             print(enity.span)
-                # self.textHighlighter.set_error((enity.span.start-4, enity.span.end-4), ann.message)
-
     def on_current_row_changed(self, row):
         self.playground.clean()
         item = self.messages_list.item(row)
@@ -190,13 +177,12 @@ class Editor(QWidget, editor.Ui_Editor):
         return item
 
     def update_list_item(self, item, message):
-        icon = QIcon()
-        if message.draft:
+        if message.error:
+            icon = QIcon(':/icons/list-error.png')
+        elif message.draft:
             icon = QIcon(':/icons/list-draft.png')
         elif not message.is_translated:
             icon = QIcon(':/icons/list-untranslated.png')
-        elif message.errors:
-            icon = QIcon(':/icons/list-error.png')
         else:
             icon = QIcon(':/icons/list-done.png')
         item.setIcon(icon)

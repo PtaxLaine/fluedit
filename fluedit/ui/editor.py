@@ -77,7 +77,7 @@ class Ui_Editor(object):
         self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
-        self.original_message_edit = QtWidgets.QTextEdit(self.layoutWidget1)
+        self.original_message_edit = FluentMessageEditor(self.layoutWidget1)
         self.original_message_edit.setReadOnly(True)
         self.original_message_edit.setObjectName("original_message_edit")
         self.verticalLayout_2.addWidget(self.original_message_edit)
@@ -105,7 +105,7 @@ class Ui_Editor(object):
         self.is_draft_box.setObjectName("is_draft_box")
         self.horizontalLayout.addWidget(self.is_draft_box)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
-        self.translited_message_edit = QtWidgets.QTextEdit(self.layoutWidget2)
+        self.translited_message_edit = FluentMessageEditor(self.layoutWidget2)
         self.translited_message_edit.setAcceptRichText(False)
         self.translited_message_edit.setObjectName("translited_message_edit")
         self.verticalLayout_4.addWidget(self.translited_message_edit)
@@ -214,3 +214,4 @@ class Ui_Editor(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Editor", "Configuration"))
 
 
+from ..fluent_message import FluentMessageEditor
