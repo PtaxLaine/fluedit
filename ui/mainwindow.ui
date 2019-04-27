@@ -646,7 +646,7 @@
    <sender>actionImportSourceCode</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_import_source()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -662,7 +662,7 @@
    <sender>actionImportFTL</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_import_ftl()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -694,7 +694,7 @@
    <sender>actionFind_in_memories</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_find_memoirs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -721,5 +721,8 @@
   <slot>on_save_all()</slot>
   <slot>on_close()</slot>
   <slot>on_close_all()</slot>
+  <slot>on_find_memoirs()</slot>
+  <slot>on_import_source()</slot>
+  <slot>on_import_ftl()</slot>
  </slots>
 </ui>

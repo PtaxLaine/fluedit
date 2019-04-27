@@ -164,10 +164,10 @@ class Ui_MainWindow(object):
         self.actionFind_message.triggered.connect(MainWindow.on_find_message)
         self.actionFindNext.triggered.connect(MainWindow.on_find_next)
         self.actionFind_message_id.triggered.connect(MainWindow.on_find_message_id)
-        self.actionImportSourceCode.triggered.connect(MainWindow.notimplemented)
-        self.actionImportFTL.triggered.connect(MainWindow.notimplemented)
+        self.actionImportSourceCode.triggered.connect(MainWindow.on_import_source)
+        self.actionImportFTL.triggered.connect(MainWindow.on_import_ftl)
         self.actionClose_all.triggered.connect(MainWindow.on_close_all)
-        self.actionFind_in_memories.triggered.connect(MainWindow.notimplemented)
+        self.actionFind_in_memories.triggered.connect(MainWindow.on_find_memoirs)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

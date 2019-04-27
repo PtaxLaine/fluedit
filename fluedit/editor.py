@@ -8,6 +8,7 @@ from .editor_config import EditorConfig
 from .message import Message
 from .playground import Playground
 from .ui import editor
+from .memoirs import Memoirs
 import shutil
 
 
@@ -154,6 +155,10 @@ class Editor(QWidget, editor.Ui_Editor):
                 self.on_changed()
                 self.current_message.message = plain
 
+    def on_memoirs_activated(self, item):
+        text = item.text()
+        self.translited_message_edit.setPlainText(text)
+
     def on_current_row_changed(self, row):
         self.playground.clean()
         item = self.messages_list.item(row)
@@ -168,6 +173,17 @@ class Editor(QWidget, editor.Ui_Editor):
         self.is_draft_box.setCheckState(Qt.Qt.Checked if msg.draft else Qt.Qt.Unchecked)
         self.msg_source_fname_box.setText(msg.file[0] if msg.file else "")
         self.msg_source_line_box.setText(str(msg.file[1]) if msg.file else "")
+
+        self.memoirs_list.clear()
+        if msg.original:
+            if msg.is_translated:
+                Memoirs.append(msg)
+
+            def completed(variants: (Memoirs.SearchResult,)):
+                for v in variants:
+                    self.memoirs_list.addItem(v.msg.message)
+
+            Memoirs.search(msg, completed)
 
     def on_create_message(self):
         text, _ = QInputDialog.getText(self, None, "item name")

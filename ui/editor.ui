@@ -251,14 +251,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="listView">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
+            <widget class="QListWidget" name="memoirs_list"/>
            </item>
            <item>
             <widget class="QLabel" name="label_6">
@@ -326,8 +319,8 @@
    <slot>on_draft_box_changed(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>512</x>
-     <y>276</y>
+     <x>537</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
@@ -390,8 +383,8 @@
    <slot>on_fliter_changed(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>476</y>
+     <x>188</x>
+     <y>547</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
@@ -431,6 +424,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>memoirs_list</sender>
+   <signal>itemActivated(QListWidgetItem*)</signal>
+   <receiver>Editor</receiver>
+   <slot>on_memoirs_activated()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>672</x>
+     <y>198</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_message_changed()</slot>
@@ -440,5 +449,6 @@
   <slot>on_current_row_changed(int)</slot>
   <slot>on_tab_changed(int)</slot>
   <slot>on_create_message()</slot>
+  <slot>on_memoirs_activated()</slot>
  </slots>
 </ui>

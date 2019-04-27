@@ -8,6 +8,7 @@ from .editor import Editor
 from .license import LicenseDialog
 from .ui import mainwindow
 from .welcome import Welcome
+from .memoirs import Memoirs
 
 
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
@@ -51,6 +52,15 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
                     self._save(editor)
 
     def notimplemented(self):
+        raise NotImplementedError()
+
+    def on_find_memoirs(self):
+        Memoirs.search_dialog(self)
+
+    def on_import_source(self):
+        raise NotImplementedError()
+
+    def on_import_ftl(self):
         raise NotImplementedError()
 
     def on_tab_current_changed(self, index):
