@@ -24,7 +24,7 @@ class Playground(QWidget, playground.Ui_Playground):
         super().changeEvent(ev)
         if ev.type() == QEvent.EnabledChange and self.isEnabled():
             self.compile()
-            self.update_variables()
+            self._update_variables()
 
     def clean(self):
         self.variables = {}
