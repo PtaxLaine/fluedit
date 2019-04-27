@@ -21,6 +21,7 @@ class FluentMessageEditor(QTextEdit):
 
         self.highlighter = Highlighter(self)
         self.lines = FluentMessageEditorLines(self)
+        self.errors = []
 
     def resizeEvent(self, ev):
         super().resizeEvent(ev)
@@ -62,6 +63,7 @@ class FluentMessageEditor(QTextEdit):
         self.setExtraSelections(selections)
         self.setToolTip("\n".join(map(lambda x: x[1], errors)))
         self.error.emit(True if errors else False)
+        self.errors = errors
 
 
 class FluentMessageEditorLines(QWidget):

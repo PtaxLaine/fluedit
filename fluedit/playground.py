@@ -1,11 +1,12 @@
 import json
 import re
+import time
 
 import fluent.runtime
 import fluent.syntax
 import fluent.syntax.ast
+from PyQt5.QtCore import QEvent, QTimer
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import QEvent
 
 from .ui import playground
 
@@ -17,6 +18,7 @@ class Playground(QWidget, playground.Ui_Playground):
         super().__init__()
         self.setupUi(self)
         self.variables = {}
+        self._last_variables_updated = 0
 
     def changeEvent(self, ev):
         super().changeEvent(ev)
@@ -31,6 +33,11 @@ class Playground(QWidget, playground.Ui_Playground):
     def compile(self):
         if not self.isEnabled():
             return
+        if self.translited_message_edit.errors:
+            self.console_edit.setPlainText("\n".join(
+                map(lambda x: f'Line {x[0]} : {x[1]}', self.translited_message_edit.errors)
+            ))
+            return
 
         msg = self.translited_message_edit.toPlainText()
         msg = f"msg = {msg}"
@@ -41,23 +48,13 @@ class Playground(QWidget, playground.Ui_Playground):
             char = '\u200F'
 
         try:
-            syntax = fluent.syntax.FluentParser()
-            entries = syntax.parse(msg)
-            errors = ""
-            for entity in entries.body:
-                if isinstance(entity, fluent.syntax.ast.Junk):
-                    for ann in entity.annotations:
-                        errors += f'{ann.span}\n{ann.code} {ann.message}'
-            if errors:
-                self.console_edit.setPlainText(errors)
-            else:
-                variables = json.loads(self.variables_edit.toPlainText())
-                self.variables = variables
-                bundle = fluent.runtime.FluentBundle([self.language_box.currentText()])
-                bundle.add_messages(msg)
-                fmt, errors = bundle.format("msg", variables)
-                self.output_edit.setPlainText(char + fmt)
-                self.console_edit.setPlainText("\n".join(errors))
+            variables = json.loads(self.variables_edit.toPlainText())
+            self.variables = variables
+            bundle = fluent.runtime.FluentBundle([self.language_box.currentText()])
+            bundle.add_messages(msg)
+            fmt, errors = bundle.format("msg", variables)
+            self.output_edit.setPlainText(char + fmt)
+            self.console_edit.setPlainText("\n".join(errors))
         except Exception as ex:
             self.console_edit.setPlainText(f'{type(ex).__name__}\n{ex}')
 
@@ -65,10 +62,7 @@ class Playground(QWidget, playground.Ui_Playground):
         js = json.dumps(self.variables, indent=4, ensure_ascii=False)
         self.variables_edit.setPlainText(js)
 
-    def update_variables(self):
-        if not self.isEnabled():
-            return
-
+    def _update_variables(self):
         variables = set()
         msg = self.translited_message_edit.toPlainText()
         for var in Playground.VARIABLE_DETECTOR.finditer(msg):
@@ -77,6 +71,23 @@ class Playground(QWidget, playground.Ui_Playground):
         for var in variables:
             if var not in self.variables:
                 update = True
-                self.variables[var] = None
+                self.variables[var] = 0
         if update:
             self.variables_updated()
+
+    def update_variables(self):
+        if not self.isEnabled():
+            return
+
+        def _tick():
+            if time.monotonic() - self._last_variables_updated < 0.7:
+                QTimer.singleShot(100, _tick)
+            else:
+                self._update_variables()
+                self._last_variables_updated = 0
+
+        if self._last_variables_updated == 0:
+            self._last_variables_updated = time.monotonic()
+            QTimer.singleShot(100, _tick)
+        else:
+            self._last_variables_updated = time.monotonic()
