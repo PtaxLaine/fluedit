@@ -4,7 +4,7 @@ _Preview, minimum viable product_
 
 Standalone python writed FLT (Fluent Translation List) editor.
 
-Project Fluent [GitHub](https://github.com/projectfluent) [Site](https://projectfluent.org/)
+(Project Fluent [GitHub](https://github.com/projectfluent) / [Homepage](https://projectfluent.org/))
 
 
 ## How to install
