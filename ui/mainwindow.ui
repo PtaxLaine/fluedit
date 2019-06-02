@@ -97,9 +97,6 @@
      <addaction name="actionReport_issue"/>
      <addaction name="actionGithub"/>
      <addaction name="actionGitlab"/>
-     <addaction name="actionDiscord"/>
-     <addaction name="actionGitter"/>
-     <addaction name="actionBuy_Me_A_Coffee"/>
     </widget>
     <addaction name="menuAbout"/>
     <addaction name="actionLicense"/>
@@ -278,7 +275,7 @@
    <sender>actionWiki</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_open_wiki()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -358,7 +355,7 @@
    <sender>actionGithub</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_open_github()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -374,7 +371,7 @@
    <sender>actionGitlab</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_open_gitlab()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -390,7 +387,7 @@
    <sender>actionIssues</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_open_issues()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -406,7 +403,7 @@
    <sender>actionReport_issue</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>notimplemented()</slot>
+   <slot>on_open_report_issue()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -724,5 +721,10 @@
   <slot>on_find_memoirs()</slot>
   <slot>on_import_source()</slot>
   <slot>on_import_ftl()</slot>
+  <slot>on_open_wiki()</slot>
+  <slot>on_open_github()</slot>
+  <slot>on_open_issues()</slot>
+  <slot>on_open_gitlab()</slot>
+  <slot>on_open_report_issue()</slot>
  </slots>
 </ui>

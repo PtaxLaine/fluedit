@@ -11,6 +11,7 @@ from .welcome import Welcome
 from .memoirs import Memoirs
 from .import_ftl import ImportFtl
 from . import common
+from webbrowser import open_new_tab as web_open
 
 
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
@@ -133,6 +134,21 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
     def on_close_editor(self, index):
         self._close(index)
+
+    def on_open_wiki(self):
+        web_open('https://github.com/PtaxLaine/fluedit/wiki')
+
+    def on_open_github(self):
+        web_open('https://github.com/PtaxLaine/fluedit/')
+
+    def on_open_gitlab(self):
+        web_open('https://gitlab.com/PtaxLaine/fluedit')
+
+    def on_open_issues(self):
+        web_open('https://github.com/PtaxLaine/fluedit/issues')
+
+    def on_open_report_issue(self):
+        web_open('https://github.com/PtaxLaine/fluedit/issues/new')
 
     def _close(self, index):
         editor = self.editor_tabs.widget(index)
